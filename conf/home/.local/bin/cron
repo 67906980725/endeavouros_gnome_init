@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# 供 ~/.config/autostart 下 desktop 文件调用实现用户级自启服务
+
+normal_time=10
+cd $HOME/.local/bin/crons
+
+
+taks()
+{
+    for f in $(ls)
+    do
+        sh $f $1
+    done
+}
+
+cron() {
+    sleep $1
+    let cnt=$normal_time
+    while true; do
+        taks $cnt
+        sleep $normal_time; let cnt+=$normal_time
+    done
+}
+
+taks
+cron $normal_time &

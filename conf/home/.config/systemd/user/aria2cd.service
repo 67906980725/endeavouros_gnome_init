@@ -1,0 +1,9 @@
+[Unit]
+Description=aria2 daemon
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/aria2c --conf-path=%E/aria2/aria2.conf --dir=%h/Downloads --input-file=%E/aria2/aria2.session --save-session=%E/aria2/aria2.session --log=%E/aria2/aria2.log
+
+[Install]
+WantedBy=default.target

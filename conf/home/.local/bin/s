@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# 在各主流网站搜索关键词
+
+zhi_hu="https://www.zhihu.com/search?type=content&q=$@"
+bilibili="https://search.bilibili.com/all?search_source=1&keyword=$@"
+douyin="https://www.douyin.com/search/$@?source=search_bar_inner"
+bing="https://www.bing.com/search?form=MOZLBR&pc=MOZI&q=$@"
+baidu="https://www.baidu.com/baidu?ie=utf-8&wd=$@"
+
+firefox "$zhi_hu" "$bilibili" "$douyin" "$bing" "$baidu"

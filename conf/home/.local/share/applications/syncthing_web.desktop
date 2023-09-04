@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Terminal=false
+Icon=syncthing
+Exec=sh -c "xdg-open http://127.0.0.1:8384"
+Name=Syncthing_web
+Name[zh_CN]=Syncthing_web
+Comment=Syncthing_web
+Comment[zh_CN]=Syncthing_web
+Categories=Net;Network,Tool

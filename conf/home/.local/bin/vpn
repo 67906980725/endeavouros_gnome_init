@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# 快捷的 openvpn, 如: vpn test
+_vpn()
+{
+    conf="$2"
+    if [ "$conf" = "" ]; then
+        conf="client.ovpn"
+    fi
+    sudo openvpn --cd $HOME/.config/openvpn/$1 --config "$conf"
+}
+
+case $1 in
+    test) echo "test vpn !!! over!!!" ;;
+    *) _vpn "$1" ;;
+esac

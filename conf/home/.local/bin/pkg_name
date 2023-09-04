@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# 根据中文名查找应用包名 (有 xfce4-appfinder 可用
+matchs="$(grep -r "$1" /usr/share/applications)"
+echo "$matchs" | while read line 
+do 
+  file="$(echo $line | awk -F ':' '{print $1}')"
+  app="$(echo $line | awk -F ':' '{print $2}')"
+  exec_match="$(grep 'Exec=' $file)"
+  exec_name="$(echo "$exec_match" | awk -F '=' '{print $1}')"
+  pkg_name="$(echo "$exec_match" | awk -F '=' '{print $2}')"
+  echo "文件: $file 匹配: $app $exec_name $pkg_name"
+done

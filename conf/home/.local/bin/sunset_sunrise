@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+
+# 根据时间切换深色/浅色模式 由用户级定时任务调用
+
+dir="$HOME/.local/share/sunset_sunrise"
+month_file="$dir/month.html"
+day_file="$dir/day"
+
+# 第一次用需要执行一次init方法
+init()
+{
+    mkdir "$dir"
+    touch "$month_file"
+    touch "$day_file"
+}
+
+
+day="$(date '+%Y-%m-%d')"
+
+
+time_to_ts()
+{
+    echo $(date -d $1 '+%s')
+}
+
+req_line()
+{
+    line="$(grep -m 1 $day $month_file)"
+    if [ "$line" = "" ]; then
+        content=$(curl 'https://richuriluo.xuenb.com/294.html') # id换成所在地
+        echo "$content" > "$month_file"
+        line="$(grep -m 1 $day $month_file)"
+    fi
+    echo "$line"
+}
+
+light_dark_by_sunset_sunrise()
+{
+    day_line="$(cat $day_file)"
+    read day_line_day sunset sunrise count<<< `echo "$day_line" | awk '{print $1,$2,$3,$4}'`
+    if [ "$day_line_day" = "$day" ]; then
+        # 请求过了 超限了 返回错误
+        if [ $count -ge 3 ]; then
+            return 1
+        fi
+        # 请求过了 没超限 但没结果 再请求
+        if [ "$sunset" = "-" ]; then
+            ((count++))
+            day_line="$(req_line)"
+            read day_line_day sunset sunrise<<< `echo "$day_line" | sed 's/<[^>]*>/ /g' | sed 's/[\t ]\+/ /g' | awk '{print $1,$3,$5}'`
+            [[ -z $sunset ]] && sunset='-'
+            [[ -z $sunrise ]] && sunrise='-'
+            echo "$day $sunset $sunrise $count" > "$day_file"
+        fi
+        # else 请求过了, 有结果, 正常
+    else
+        # 没请求过 请求一次
+        day_line="$(req_line)"
+        read day_line_day sunset sunrise<<< `echo "$day_line" | sed 's/<[^>]*>/ /g' | sed 's/[\t ]\+/ /g' | awk '{print $1,$3,$5}'`
+        [[ -z $sunset ]] && sunset='-'
+        [[ -z $sunrise ]] && sunrise='-'
+        echo "$day $sunset $sunrise 0" > "$day_file"
+    fi
+    if [ "$sunset" = "-" ]; then
+        return 1
+    fi
+
+    now="$(date '+%H:%M')"
+    now_ts=$(time_to_ts "$now")
+    sunset_ts=$(time_to_ts "$sunset")
+    sunrise_ts=$(time_to_ts "$sunrise")
+    if [ $now_ts -ge $sunset_ts ]  &&  [ $now_ts -lt $sunrise_ts ] ; then
+        $HOME/.local/bin/toggelt_dark_mode light dis_overwrite
+    else
+        $HOME/.local/bin/toggelt_dark_mode dark dis_overwrite
+    fi
+}
+
+
+case $1 in
+    init) init;;
+    *) light_dark_by_sunset_sunrise ;;
+esac

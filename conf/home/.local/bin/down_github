@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# 使用代理下载github文件, 常用于 paru 从 aur 安装软件下载 github 资源失败时
+# down_github <url> [use_proxy_url_num:-0] 
+
+cd $HOME/Downloads
+
+proxys=("https://ghproxy.com" \
+    "https://gh.flyinbug.top/gh" \
+    "https://proxy.methanol.top")
+
+url="$1"
+use_num=$2; [ ! $use_num ] && use_num=0
+proxy_url="${proxys[$use_num]}"
+proxyed_url="$proxy_url/$url"
+
+# 保持文件名(异步) https://blog.csdn.net/pudge_yang_zhang/article/details/90241329
+curl -OJ -# -L "$proxyed_url"
+
+# wget <url> -P <aimPath> -O <fileName>
+# curl -L <url> -o <filePath>

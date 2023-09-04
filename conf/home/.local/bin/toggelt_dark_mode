@@ -1,0 +1,96 @@
+#!/usr/bin/env bash
+
+# 深色/浅色模式切换
+
+prefer_dark_name="prefer-dark"
+prefer_light_name="default"
+gnome_shell_dark_name="Orchis-Dark-Compact"
+gnome_shell_light_name="Orchis-Light-Compact"
+gtk2_dark_name="Adwaita-dark"
+gtk2_light_name="Adwaita"
+
+code_dark_name="Default\ Dark\ Modern"
+code_light_name="Default\ Light\ Modern" # 默认主题时可能 json 文件中不存在主题色属性, 需要先在 vscode 中手动修改为白色主题. todo 用 jq 修改
+fcitx5_dark_name="Alpha-black-2.0"
+fcitx5_light_name="珍珠白"
+
+
+# 切换到深色模式
+full_dark()
+{   
+    # 如果方法调用时有传参并且当前color-scheme是$prefer_dark_name时就不再设置主题了
+    if [ "$1" != "" ] && [ "$(gsettings get org.gnome.desktop.interface color-scheme)" = "'$prefer_dark_name'" ]; then
+        return 0
+    fi
+    dark
+    code_Dark
+    fcitx5_Dark
+    restarts &
+}
+# 切换到浅色模式
+full_light()
+{
+    if [ "$1" != "" ] && [ "$(gsettings get org.gnome.desktop.interface color-scheme)" = "'$prefer_light_name'" ]; then
+        return 0
+    fi
+    light
+    code_light
+    fcitx5_light
+    restarts &
+}
+# 切换到另一个模式
+toggelt()
+{
+    mode="$(gsettings get org.gnome.desktop.interface color-scheme)"
+    if [ "$mode" = "'$prefer_dark_name'" ]; then
+        full_light
+    else
+        full_dark
+    fi
+}
+
+dark()
+{
+    gsettings set org.gnome.desktop.interface color-scheme "$prefer_dark_name"
+    gsettings set org.gnome.shell.extensions.user-theme name "$gnome_shell_dark_name"
+    gsettings set org.gnome.desktop.interface gtk-theme "$gtk2_dark_name"
+}
+light()
+{
+    gsettings set org.gnome.desktop.interface color-scheme "$prefer_light_name"
+    gsettings set org.gnome.shell.extensions.user-theme name "$gnome_shell_light_name"
+    gsettings set org.gnome.desktop.interface gtk-theme "$gtk2_light_name"
+}
+code_Dark()
+{
+    sed -i "/workbench.colorTheme/s/$code_light_name/$code_dark_name/" "$HOME/.config/Code - OSS/User/settings.json"
+}
+code_light()
+{
+    sed -i "/workbench.colorTheme/s/$code_dark_name/$code_light_name/" "$HOME/.config/Code - OSS/User/settings.json"
+}
+fcitx5_Dark()
+{
+    sed -i "/Theme=/s/$fcitx5_light_name/$fcitx5_dark_name/" "$HOME/.config/fcitx5/conf/classicui.conf"
+}
+fcitx5_light()
+{
+    sed -i "/Theme=/s/$fcitx5_dark_name/$fcitx5_light_name/" "$HOME/.config/fcitx5/conf/classicui.conf"
+}
+restarts()
+{
+    qq_cnt=$(ps -ef | grep linuxqq | wc -l)
+    if [ $qq_cnt -gt 1 ]; then
+        notify-send "即将重启: QQ"
+        sleep 10
+        $HOME/.local/bin/k qq
+        gtk-launch qq
+    fi
+}
+
+
+case $1 in
+    dark) full_dark $2;;
+    light) full_light $2;;
+    *) toggelt ;;
+esac

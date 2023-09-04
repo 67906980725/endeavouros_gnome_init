@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# rewechat: 修复安装deepin-wine-wechat时包验证不通过的错误并重新安装
+# rewechat dpi: 打开deepin-wine-wechat的winecfg
+re()
+{
+    cd ~/.cache/paru/clone/deepin-wine-wechat
+    updpkgsums
+    makepkg -si
+}
+
+dpi()
+{
+    /opt/apps/com.qq.weixin.deepin/files/run.sh winecfg
+}
+
+
+case $1 in
+    dpi) dpi ;;
+    *) re ;;
+esac

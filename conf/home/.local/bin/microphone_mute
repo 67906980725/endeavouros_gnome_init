@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# 快捷禁用/启用麦克风
+pactl list sources | grep Name | grep input | awk '{print $2}' | xargs -I {} pactl set-source-mute {} toggle

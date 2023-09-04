@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+u=$USER
+dir="/home/$u/Downloads"
+sudo ls /root/Downloads | xargs -I{} sudo mv "/root/Downloads/{}" $dir/
+sudo chown -R $u $dir

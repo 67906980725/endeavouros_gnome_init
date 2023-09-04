@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# 循环发内容为$1的系统通知，间隔$2秒
+if [ "$2" != "" ]; then
+    cnt=0
+    while true
+    do
+        sleep "$2"
+        notify-send "我: $1. cnt: $((++cnt))"
+    done
+fi

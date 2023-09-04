@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# 打印当前时间(如 2023-03-25 17:17:13), 并复制到剪切板 (wayland
+
+now()
+{
+    str="$(date '+%Y-%m-%d %H:%M:%S')"
+    echo $str
+    wl-copy $str
+}
+
+now

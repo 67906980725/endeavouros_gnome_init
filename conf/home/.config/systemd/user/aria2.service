@@ -1,0 +1,10 @@
+[Unit]
+Description=aria2 script daemon
+
+[Service]
+Type=simple
+WorkingDirectory=%E/aria2/
+ExecStart=/usr/bin/sh -c %E/aria2/aria2_deamon.sh
+
+[Install]
+WantedBy=default.target

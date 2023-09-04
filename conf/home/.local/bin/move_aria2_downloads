@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# 移动 aria2pro 下载的文件到 ~/Downloads 下, 有进行中的下载时不要执行 
+sudo chown $USER $HOME/Downloads/aria2-downloads/*
+ls $HOME/Downloads/aria2-downloads | xargs -I{} sudo mv "$HOME/Downloads/aria2-downloads/{}" $HOME/Downloads/

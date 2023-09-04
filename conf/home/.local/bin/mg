@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# mg: 用vscode打开当前目录，mg <dirName>：用z定位到目录后用vscode打开 
+_mg()
+{
+  if [ "$1" = "" ]; then
+      code .
+  else
+      z "$1"
+      code .
+  fi
+}
+
+_mg "$1"

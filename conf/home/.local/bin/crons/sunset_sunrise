@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+seconds=300
+
+task()
+{
+    $HOME/.local/bin/sunset_sunrise
+}
+
+cnt=$1
+[ ! $cnt ] && task
+[ $((cnt % seconds)) -eq 0 ] && task
