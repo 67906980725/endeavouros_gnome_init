@@ -15,7 +15,7 @@ unzip_name="fastgithub_linux-x64"
 # 压缩包名
 zip_name="${unzip_name}.zip"
 
-# # 下载解压移动到安装目录后删除压缩包
+# 下载解压移动到安装目录后删除压缩包
 wget "${GITHUB_PROXY}https://github.com/dotnetcore/FastGithub/releases/download/$ver/$zip_name"
 unzip "$zip_name"
 rm -f "$zip_name"

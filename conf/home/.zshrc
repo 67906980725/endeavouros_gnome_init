@@ -257,21 +257,29 @@ uproxy() {
   local proxy_mode=$(gsettings get org.gnome.system.proxy mode)
 	if [ "$proxy_mode" = "'manual'" ]; then
 		echo "using proxy 代理已启用"
-  	local http_proxy_host=$(gsettings get org.gnome.system.proxy.http host)
   	local http_proxy_port=$(gsettings get org.gnome.system.proxy.http port)
-		export http_proxy="$http_proxy_host:$http_proxy_port"
+		if [ $http_proxy_port -gt 0 ]; then
+  		local http_proxy_host=$(gsettings get org.gnome.system.proxy.http host | sed "s/'//g")
+			export http_proxy="$http_proxy_host:$http_proxy_port"
+		fi
 
-		local https_proxy_host=$(gsettings get org.gnome.system.proxy.https host)
   	local https_proxy_port=$(gsettings get org.gnome.system.proxy.https port)
-		export https_proxy="$https_proxy_host:$https_proxy_port"
+		if [ $https_proxy_port -gt 0 ]; then
+			local https_proxy_host=$(gsettings get org.gnome.system.proxy.https host | sed "s/'//g")
+			export https_proxy="$https_proxy_host:$https_proxy_port"
+		fi
 
-		local socks_proxy_host=$(gsettings get org.gnome.system.proxy.socks host)
+		local socks_proxy_host=$(gsettings get org.gnome.system.proxy.socks host | sed "s/'//g")
   	local socks_proxy_port=$(gsettings get org.gnome.system.proxy.socks port)
-		export socks_proxy="$socks_proxy_host:$socks_proxy_port"
+		if [ $socks_proxy_port -gt 0 ]; then
+			export socks_proxy="$socks_proxy_host:$socks_proxy_port"
+		fi
 
-		local ftp_proxy_host=$(gsettings get org.gnome.system.proxy.ftp host)
   	local ftp_proxy_port=$(gsettings get org.gnome.system.proxy.ftp port)
-		export ftp_proxy="$ftp_proxy_host:$ftp_proxy_port"
+		if [ $ftp_proxy_port -gt 0 ]; then
+			local ftp_proxy_host=$(gsettings get org.gnome.system.proxy.ftp host | sed "s/'//g")
+			export ftp_proxy="$ftp_proxy_host:$ftp_proxy_port"
+		fi
 	elif [ "$proxy_mode" = "'auto'" ]; then
 		echo "using proxy 代理已启用"
 
