@@ -197,14 +197,13 @@ alias_git() {
 	alias ce="git clone"
 	alias ct="git checkout"
 	alias s="git status"
-	alias p="git pull"
+	alias p="git push"
+	alias l="git pull"
 	alias d="git diff"
 	alias a="git add"
 	alias c="git commit"
 	alias b="git branch"
-	alias ph="git push"
 	alias m="git merge"
-	alias sh="git stash"
 	alias r="git reset"
 
 	aliased_git=1
@@ -231,13 +230,12 @@ unalias_git() {
 	unalias ct
 	unalias s
 	unalias p
+	unalias l
 	unalias d
 	unalias a
 	unalias c
 	unalias b
-	unalias ph
 	unalias m
-	unalias sh
 	unalias r
 
 	aliased_git=0
