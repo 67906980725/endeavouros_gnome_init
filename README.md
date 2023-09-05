@@ -2,31 +2,27 @@
 
 适用于 `endeavouros gnome` 桌面环境新装后的简单配置
 
-*需要当前用户是常用用户而非 `root`, 并且有 `root` 权限
-
-*记得提前恢复 `.ssh` 目录
+## 安装
 
 ``` shell
+# 重新注册 ssh 私钥 (如果有的话
 chmod 700 ~/.ssh
 chmod 644  ~/.ssh/id_rsa.pub
 chmod 600 ~/.ssh/id_rsa
 ssh-add ~/.ssh/id_rsa
 
-mkdir -p $HOME/.local/project/sys
-cd $HOME/.local/project/sys
-git clone git@github.com:g8307640632/endeavouros_gnome_init.git
+git clone https://github.com/67906980725/endeavouros_gnome_init.git
 sh ./endeavouros_gnome_init/init.sh
 ```
 
-重启后
+也可以根据需要单独运行 `init.sh` 中包含的脚本
 
-``` shell
-sh $HOME/.local/project/sys/endeavouros_gnome_init/after_reboot.sh
- 
-```
+## 提示
+
+***在线**安装 `endeavouros` 前最好在 `welcome` 中挨个儿更新下源, 防止安装时间过长
 
 *`linux` 装软件时如果有奇怪的报错找不到问题可以更新一下再试
 
 *`arch` 装软件后如果有奇怪的问题可以更新一下然后重启再看
 
-*`arch` 正常更新后如果有奇怪的问题多半重启一下就可以
+*`arch` 日常更新后如果有奇怪的问题多半重启一下就好了

@@ -2,12 +2,12 @@
 
 source ./install.sh
 
-# docker
-docker login # 登录
-sh ./aria2_pro.sh
+# 登录 docker
+# docker login
+# aria2 pro
+# sh ./aria2_pro.sh
 
-
-# end
+## end
 if [ -e "../conf_bak" ]; then
     rm -r ./conf_bak
 else
