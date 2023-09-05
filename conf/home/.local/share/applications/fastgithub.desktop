@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Terminal=true
+Icon=thunderbolt
+Exec=sh -c "${HOME}/.local/app/fastgithub/fastgithub_deamon.sh"
+Name=fastgithub
+Name[zh_CN]=fastgithub
+Comment=fastgithub
+Comment[zh_CN]=fastgithub
+Categories=Net;Network,Tool

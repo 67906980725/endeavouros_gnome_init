@@ -254,6 +254,55 @@ autoload -U add-zsh-hook
 add-zsh-hook -Uz chpwd() { hook_chpwd }
 hook_chpwd
 
+# 检测系统代理, 有代理则启用命令行代理
+uproxy() {
+  local proxy_mode=$(gsettings get org.gnome.system.proxy mode)
+	if [ "$proxy_mode" = "'manual'" ]; then
+		echo "using proxy 代理已启用"
+  	local http_proxy_host=$(gsettings get org.gnome.system.proxy.http host)
+  	local http_proxy_port=$(gsettings get org.gnome.system.proxy.http port)
+		export http_proxy="$http_proxy_host:$http_proxy_port"
+
+		local https_proxy_host=$(gsettings get org.gnome.system.proxy.https host)
+  	local https_proxy_port=$(gsettings get org.gnome.system.proxy.https port)
+		export https_proxy="$https_proxy_host:$https_proxy_port"
+
+		local socks_proxy_host=$(gsettings get org.gnome.system.proxy.socks host)
+  	local socks_proxy_port=$(gsettings get org.gnome.system.proxy.socks port)
+		export socks_proxy="$socks_proxy_host:$socks_proxy_port"
+
+		local ftp_proxy_host=$(gsettings get org.gnome.system.proxy.ftp host)
+  	local ftp_proxy_port=$(gsettings get org.gnome.system.proxy.ftp port)
+		export ftp_proxy="$ftp_proxy_host:$ftp_proxy_port"
+	elif [ "$proxy_mode" = "'auto'" ]; then
+		echo "using proxy 代理已启用"
+
+		# https://zhuanlan.zhihu.com/p/46973701
+		local auto_proxy_url=$(gsettings get org.gnome.system.proxy autoconfig-url)
+		export ALL_PROXY="$auto_proxy_url"
+		export all_proxy="$auto_proxy_url"
+	else
+		export http_proxy=""
+		export https_proxy=""
+		export socks_proxy=""
+		export ftp_proxy=""
+
+		export ALL_PROXY=""
+		export all_proxy=""
+	fi
+
+	if [ "$proxy_mode" = "'manual'" ] || [ "$proxy_mode" = "'auto'" ]; then
+		local ignore_hosts=$(gsettings get org.gnome.system.proxy ignore-hosts)
+		if [ "$ignore_hosts" != "@as []" ]; then
+			# echo "['localhost', '127.0.0.0/8', '::1']" | sed "s/[//g" | sed "s/]//g" | tr -d ' '	
+			ignore_hosts=$(echo "$ignore_hosts" | sed "s/^\[//;s/\]$//;s/'//g" | tr -d ' ')
+			# export no_proxy=localhost,127.0.0.1,localaddress,.example.com
+			export no_proxy="$ignore_hosts"
+		fi
+	fi
+}
+uproxy
+
 # 展示网络流量统计
 # _LIU_LIANG=$(vnstat -d 2 | grep -v estimated | grep -v day | grep -v daily | grep -v + | sed '/^$/d' | awk -F "|" '{print $3}' | tr "\n" ' ')
 # echo "昨日 / 今日: $_LIU_LIANG"

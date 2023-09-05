@@ -44,10 +44,13 @@ plugin() {
 
     # 网速
     xdg-open https://extensions.gnome.org/extension/1085/simple-net-speed/
+    # 登录后重新加载达到网速插件最后加载的效果以保持在托盘区最左侧显示
+    cp_conf_home ".config/autostart/reload_net_speed_monitor.desktop"
     
     # 屏幕圆角
     xdg-open https://extensions.gnome.org/extension/1514/rounded-corners/
-    xdg-open https://extensions.gnome.org/extension/5237/rounded-window-corners/
+    # 可能会引起窗口内向
+    # xdg-open https://extensions.gnome.org/extension/5237/rounded-window-corners/
 
     # gnome-extensions enable "$(gnome-extensions list | grep -m 1 user-theme)"
     # gnome-extensions enable "$(gnome-extensions list | grep -m 1 appindicatorsupport)"

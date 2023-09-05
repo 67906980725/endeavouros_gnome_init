@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Terminal=false
+Icon=button
+Exec=sh -c 'gnome-extensions disable "simplenetspeed@biji.extension";gnome-extensions enable "simplenetspeed@biji.extension"'
+Name=reload_netspeed_monitor
+Name[zh_CN]=reload_netspeed_monitor
+Comment=reload netspeed monitor
+Comment[zh_CN]=reload netspeed monitor
+Categories=Net;Network,Tool

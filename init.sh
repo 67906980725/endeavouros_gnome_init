@@ -76,6 +76,8 @@ sh ./wechat.sh
 sh ./aliyunpan.sh
 # 魔法
 sh ./clash-verge.sh
+# fastgithub (firefox 记得安装证书
+sh ./fastgithub.sh
 # 一些自定义快捷启动图标, 根据需要制定
 # sh ./desktop_file.sh
 
