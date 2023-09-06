@@ -105,7 +105,10 @@ sh ./docker.sh
 sh ./virtual_box.sh
 
 ## gui-game
+# switch
 # sh ./yuzu.sh
 
 # font 字体
 sh ./font.sh
+
+reboot

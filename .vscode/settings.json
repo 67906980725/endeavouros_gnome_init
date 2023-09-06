@@ -1,0 +1,9 @@
+{
+  // "workbench.colorTheme": "Default Light Modern",
+  "editor.fontFamily": "JetBrainsMono, 'JetBrainsMono Nerd Font Mono', 'Source Code Pro', 'Microsoft YaHei', 'Source Han Sans CN', monospace",
+  "editor.fontWeight": "normal",
+  "editor.wordWrap": "on",
+  "editor.fontLigatures": true,
+  "editor.indentSize": 2,
+  "editor.tabSize": 2,
+}

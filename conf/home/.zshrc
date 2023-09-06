@@ -253,6 +253,7 @@ add-zsh-hook -Uz chpwd() { hook_chpwd }
 hook_chpwd
 
 # 检测系统代理, 有代理则启用命令行代理
+# 系统代理状态变更后想在当前会话同步代理状态的话可以 uproxy 一下
 uproxy() {
   local proxy_mode=$(gsettings get org.gnome.system.proxy mode)
 	if [ "$proxy_mode" = "'manual'" ]; then
