@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+# 指定文件列表, 保留相对路径移动到另一文件夹下
+# 或移动到匹配文件的另一个父级文件夹下
+# 可以用于资源文件分类整理
+
+# 如将多级 mp4 目录下的 mp3 文件移动到相同结构的 mp3 目录下
+# tree_mv "$HOME/mp3.txt" "$HOME/Downloads/music_video" "$HOME/Downloads/mp3"
+# 批量目录下资源再分类
+# tree_mv "$HOME/ppt.txt" "$HOME/Documents/work" "ppt" true
+
+# 文件列表文件
+input="$1"
+# 原文件夹
+root="$2"
+# 新文件夹
+out="$3"
+# 是否移动到同级文件夹下
+to_dir=${4:-false}
+
+# 把一个文件移动到同级目录下($out)
+process_one_to_dir() {
+    local file="$1"
+    local file_full_path=$(readlink -f "$file")
+    local file_name=$(basename "$file")
+    local parent=$(dirname "$file_full_path")
+    mkdir -p "$parent"
+    local file_new_path="$parent/$out/$file_name"
+    # echo "mv '"$file_full_path"' '"$file_new_path"'"
+    mv "$file_full_path" "$file_new_path"
+}
+
+# 把一个文件移动到另一个根目录下($out)并保持原有的相对目录结构
+process_one() {
+    local file="$1"
+    local file_full_path=$(readlink -f "$file")
+    local file_short_path=$(echo "${file_full_path#*$root}")
+    local file_new_path="$out_full_path$file_short_path"
+    local file_new_parent=$(dirname "$file_new_path")
+    mkdir -p "$file_new_parent"
+    # echo "mv '"$file_full_path"' '"$file_new_path"'"
+    mv "$file_full_path" "$file_new_path"
+}
+
+# 移动到文本路径下(适用文本内容为相对路径的情况), 脚本执行完再回来
+cur_dir=$(pwd)
+work_dir=$(dirname "$input")
+cd "$work_dir"
+
+# 变量区分两种移动类型
+[ $to_dir == false ] && out_full_path=$(readlink -f "$out")
+if [ $to_dir != false ]; then
+    fn=process_one_to_dir
+else
+    fn=process_one
+fi
+
+while IFS= read -r line; do  
+    if [[ ! -z "$line" && ! $line == *"#"* ]]; then  
+        cmd="$fn '"$line"'"
+        eval "$cmd"
+    fi
+done < "$input"  
+cd "$cur_dir"

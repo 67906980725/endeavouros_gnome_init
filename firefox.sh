@@ -3,7 +3,7 @@
 source ./install.sh
 source ./cp_conf.sh
 
-install firefox firefox-extension-mailvelope
+install firefox firefox-extension-mailvelope firefox-ublock-origin
 
 # tampermonkey
 xdg-open https://greasyfork.org/zh-CN/scripts/445274-searchjumper

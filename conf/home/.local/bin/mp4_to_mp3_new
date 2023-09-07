@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+# 文件夹 mp4 转 mp3
+
+# 要转换的文件夹
+t="$1"
+
+# 文件后缀名
+file_suffix() {
+  local file="$1"
+
+  local suffix=$(echo "$file" | awk -F '.' '{print $(NF)}')
+  if [ "$suffix" = "$file" ]; then
+    echo ""
+  else
+    echo "$suffix" # 如 txt
+  fi
+}
+
+# 文件名(不带后缀) 需要传后缀名
+file_prefix_by_suffix() {
+  local file="$1"
+  local suffix="$2"
+  
+  basename -s ".$suffix" "$file"
+}
+
+# 文件名(不带后缀)
+file_prefix() {
+  local file="$1"
+
+  local suffix=$(file_suffix "$file")
+  local prefix=$(file_prefix_by_suffix "$file" "$suffix")
+  echo "$prefix"
+}
+
+
+# 筛选要处理的文件
+files=$(find "$t" -name "*.mp4")
+
+# 处理后的文件列表文件
+result_file=""result.txt""
+echo "" > "$result_file"
+
+IFS=$'\n'
+for file in $(echo "$files"); do
+  # 文件名(不带后缀
+  prefix=$(file_prefix "$file")
+  # 文件全路径
+  file_full_path=$(readlink -f "$file")
+  # 文件所在文件夹
+  parent=$(dirname "$file_full_path")
+  # 处理后的文件名
+  result="$parent/${prefix}.mp3"
+  # 写入结果文件
+  echo "$result" >> "$result_file"
+  # 处理文件
+  ffmpeg -i "$file" "$result"
+done
+
+# 用结果文件将处理结果树分离到新文件夹
+# $HOME/.local/bin/tree_mv "$result_file" "$t" "${t}_mp3"
+/home/v/.local/project/sys/endeavour_gnome_init/conf/home/.local/bin/tree_mv "$result_file" "$t" "${t}_mp3"
+
+# 删除结果文件
+# rm "$result_file"

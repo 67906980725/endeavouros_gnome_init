@@ -1,0 +1,113 @@
+#!/usr/bin/env bash
+# mp4 转 mp3
+
+# 要转换的文件或文件夹
+t="$1"
+# 生成的文件或文件夹
+o="$2"
+
+# 文件后缀名
+file_suffix() {
+  local file="$1"
+
+  local suffix=$(echo "$file" | awk -F '.' '{print $(NF)}')
+  if [ "$suffix" = "$file" ]; then
+    echo ""
+  else
+    echo "$suffix" # 如 txt
+  fi
+}
+
+# 文件名(不带后缀) 需要传后缀名
+file_prefix_by_suffix() {
+  local file="$1"
+  local suffix="$2"
+  
+  basename -s ".$suffix" "$file"
+}
+
+# 文件名(不带后缀)
+file_prefix() {
+  local file="$1"
+
+  local suffix=$(file_suffix "$file")
+  local prefix=$(file_prefix_by_suffix "$file" "$suffix")
+  echo "$prefix"
+}
+
+# 原子的 mp4 转 mp3 方法
+mp4_to_mp3() {
+  local file="$1"
+  local out="$2"
+
+  local cmd="ffmpeg -i '"$file"' '"$out"'"
+  echo "执行命令: $cmd"
+  #sh -c $cmd
+  eval $cmd
+}
+
+# mp4 名转 mp3 名
+get_mp3_name_by_file() {
+  local file="$1"
+
+  local prefix=$(file_prefix "$file")
+  echo "${prefix}.mp3"
+}
+
+# 转换 mp4 到文件夹
+trans_file_to_dir() {
+  local t="$1"
+  local o="$2"
+
+  local mp3_name=$(get_mp3_name_by_file "$t")
+  mp4_to_mp3 "$t" "$o/$mp3_name"
+}
+
+# 转换 mp4 目录到文件夹
+trans_dir() {
+  local t="$1"
+  local o="$2"
+
+  # 手动设置IFS排除空格分隔符
+  local IFS=$'\n'
+  for file in $(ls "$t") 
+  do
+    local file_full_path="$t/$file"
+    if [ -d "$file_full_path" ]; then
+      local new_o="$o/$file"
+      mkdir -p "$new_o"
+      trans_dir "$file_full_path" "$new_o"
+    elif [ -f "$file_full_path" ]; then
+      trans_file_to_dir "$file_full_path" "$o"
+    fi
+  done
+}
+
+# 转换 mp4 文件或目录到文件夹
+trans_item() {
+  local t="$1"
+  local o="$2"
+
+  if [ -d "$t" ]; then
+    mkdir -p "$o"
+    trans_dir "$t" "$o"
+  else
+    mp4_to_mp3 "$t" "$o"
+  fi
+}
+
+
+# 如果没有指定输出
+if [ "$o" = "" ]; then
+  if [ -d "$t" ]; then
+    # 如果输入是文件夹, 输出到文件夹名_mp3
+    o="${t}_mp3"
+  elif [ -f "$t" ]; then
+    # 如果输入是文件, 输出到文件名.mp3
+    t_dir=$(dirname "$t")
+    mp3_name=$(get_mp3_name_by_file "$t")
+    o="$t_dir/$mp3_name"
+  fi
+fi
+
+trans_item "$t" "$o"

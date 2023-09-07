@@ -44,9 +44,12 @@ plugin() {
 
     # 网速
     xdg-open https://extensions.gnome.org/extension/1085/simple-net-speed/
-    # 登录后重新加载达到网速插件最后加载的效果以保持在托盘区最左侧显示
+    # 保持在托盘区最左侧显示 登录后重新加载以实现网速插件最后加载的效果
     cp_conf_home ".config/autostart/reload_net_speed_monitor.desktop"
-    
+    # 修改默认模式为第 4 个并禁用点击轮换
+    # sed -i '6 s@0@3@' "$HOME/.local/share/gnome-shell/extensions/simplenetspeed@biji.extension/schemas/org.gnome.shell.extensions.simplenetspeed.gschema.xml"
+    # sed -i 's/ button\.connect/ \/\/button\.connect/' "$HOME/.local/share/gnome-shell/extensions/simplenetspeed@biji.extension/extension.js"
+
     # 屏幕圆角
     xdg-open https://extensions.gnome.org/extension/1514/rounded-corners/
     # 可能会引起窗口内向

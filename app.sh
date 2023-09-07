@@ -16,6 +16,8 @@ cmd()
 desk()
 {
   # $1: bin_name $2:app_name $3: icon_name $4: param
+  # 图标名称可以从 /usr/share/icons/<theme_name> 下找 (如 /usr/share/icons/Qogir/32/apps/
+  # 或 ~/.local/share/icons/<theme_name>/
   if [ "$1" != "" ] || [ "$4" != "" ] ; then
     echo "创建启动图标:${2}, 如有报错 [Operation not permitted] 可以忽略"
     r_path=""

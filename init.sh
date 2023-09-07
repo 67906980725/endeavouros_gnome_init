@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# 需要当前用户是常用用户而非 root, 并且有 root 权限
 
 # 切换工作目录到脚本目录
 # D="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"

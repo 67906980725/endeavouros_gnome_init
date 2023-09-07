@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# 从配置文件选择 ssh 服务器连接 (依赖 fzf
+
+# ssh: sshc
+# scp 上传: sshc <local_path> <remote_path>
+# scp 下载: sshc <local_path> <remote_path> -l(有东西占位就行)
+
+# 配置文件
+# 行内容: <自定义服务器别名> <服务用户名> <服务主机> <服务端口(默认为22)>
+# 如: myphone u0_a355 192.168.31.189 8022
+conf_file="$HOME/.ssh/ssh_server.txt"  
+
+# scp时 
+# 本机路径
+local_path="$1"
+# 服务器路径
+remote_path="$2"
+# 文件传送模式(默认上传
+mode="${3:--p}"
+
+# 读取配置文件
+content=$(cat "$conf_file" | grep -v "^#" | grep -v "^$")
+# 使用 fzf 选择服务器名称  
+selected_name=$(echo "${content}" | awk '{print $1}' | fzf) 
+# 选定服务器行解析
+line=$(echo "$content" | grep "^$selected_name ")
+tokens=($line)
+user_name=${tokens[1]}  
+host_name=${tokens[2]}  
+port=${tokens[3]:-22}  
+  
+# 根据参数决定执行的操作
+if [[ -z "$local_path" && -z "$remote_path" ]]; then  
+    # 两个路径都为空时使用 ssh
+    cmd="ssh $user_name@$host_name -p $port"  
+elif [ "$mode" = "-p" ]; then  
+    cmd="scp -P $port $local_path $user_name@$host_name:$remote_path"  
+else  
+    cmd="scp -P $port $user_name@$host_name:$remote_path $local_path"  
+fi  
+  
+# echo "执行的命令: $cmd"
+eval "$cmd"
