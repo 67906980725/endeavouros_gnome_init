@@ -2,31 +2,6 @@
 #   source .bashrc
 # fi
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-
-# Path to your oh-my-zsh installation.
-ZSH=/usr/share/oh-my-zsh/
-ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="powerlevel10k/powerlevel10k"
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -73,19 +48,39 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # see 'man strftime' for details.
 # HIST_STAMPS="mm/dd/yyyy"
 
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
 
-# Which plugins would you like to load?
+# oh-my-zsh
+# ZSH=/usr/share/oh-my-zsh/
+source /usr/share/oh-my-zsh/oh-my-zsh.sh
+ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
+if [[ ! -d $ZSH_CACHE_DIR ]]; then
+  mkdir $ZSH_CACHE_DIR
+fi
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=( z git zsh-autosuggestions zsh-completions zsh-syntax-highlighting fzf-tab )
+# ZSH_CUSTOM=/usr/share/zsh/
+# ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
+# plugins=( z git zsh-completions zsh-autosuggestions zsh-syntax-highlighting fzf-tab )
+plugins=( z git )
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/fzf-tab-git/fzf-tab.zsh
 
+# 随机主题 https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+# ZSH_THEME="random"
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+# p10k 主题
+# ZSH_THEME="powerlevel10k/powerlevel10k"
+source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+# 配置 p10k (p10k configure
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
 # User configuration
 
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -101,26 +96,6 @@ plugins=( z git zsh-autosuggestions zsh-completions zsh-syntax-highlighting fzf-
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
-if [[ ! -d $ZSH_CACHE_DIR ]]; then
-  mkdir $ZSH_CACHE_DIR
-fi
-
-source $ZSH/oh-my-zsh.sh
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-
 # ---------- 自定义 ----------
 
 # 自定义环境变量
@@ -132,11 +107,12 @@ export _LD_LIBRARY_PATH=${HOME}/.local/lib
 export PATH=$SCRIPT_PATH:$BIN_PATH:$APP_IMAGE_PATH:$_LD_LIBRARY_PATH:/usr/local/bin:$PATH
 export LD_LIBRARY_PATH=${_LD_LIBRARY_PATH}:$LD_LIBRARY_PATH
 
+# 查看所有别名: alias 
 # 包管理器别名
 alias sync="sudo pacman -Syyy"
 alias install="sudo pacman -S"
+#alias update="paru"
 alias update="sudo pacman -Syyu"
-# alias update="paru"
 alias search="sudo pacman -Ss"
 alias search-local="sudo pacman -Qs"
 alias pkg-info="sudo pacman -Qi"
@@ -253,7 +229,6 @@ add-zsh-hook -Uz chpwd() { hook_chpwd }
 hook_chpwd
 
 # 检测系统代理, 有代理则启用命令行代理
-# 系统代理状态变更后想在当前会话同步代理状态的话可以 uproxy 一下
 uproxy() {
   local proxy_mode=$(gsettings get org.gnome.system.proxy mode)
 	if [ "$proxy_mode" = "'manual'" ]; then
