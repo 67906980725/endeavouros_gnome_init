@@ -32,3 +32,6 @@ ln -sf "$HOME/.local/share/applications/fastgithub.desktop" "$HOME/.config/autos
 # firefox 需要安装证书, 请查看安装目录下 README.html
 # 设置->隐私与安全->证书->查看证书->证书颁发机构，导入cacert/fastgithub.cer，勾选“信任由此证书颁发机构来标识网站”
 # 重新安装 fastgithub 后 firefox 报错: "对等端的证书有一个无效的签名." 时删除旧证书安装新证书就可以了
+
+# 已知问题: 会导致 chrome-gnome-shell 无法安装扩展
+# 以上情况需要临时关闭 fastgithub

@@ -38,6 +38,12 @@ plugin() {
     install_ur firefox-extension-gnome-shell-integration
     firefox https://addons.mozilla.org/zh-CN/firefox/addon/gnome-shell-integration/
 
+    # 允许状态栏主题
+    xdg-open https://extensions.gnome.org/extension/19/user-themes
+
+    # 删除“窗口已就绪”通知，改为使窗口成为焦点
+    xdg-open https://extensions.gnome.org/extension/5410/grand-theft-focus/
+
     # 剪切板
     #xdg-open https://extensions.gnome.org/extension/779/clipboard-indicator/
     xdg-open https://extensions.gnome.org/extension/5721/clipboard-indicator/
@@ -50,10 +56,39 @@ plugin() {
     # sed -i '6 s@0@3@' "$HOME/.local/share/gnome-shell/extensions/simplenetspeed@biji.extension/schemas/org.gnome.shell.extensions.simplenetspeed.gschema.xml"
     # sed -i 's/ button\.connect/ \/\/button\.connect/' "$HOME/.local/share/gnome-shell/extensions/simplenetspeed@biji.extension/extension.js"
 
+    # 使用 Ctrl+Super+Up/Down 对工作区重新排序
+    xdg-open https://extensions.gnome.org/extension/3685/reorder-workspaces/
+
     # 屏幕圆角
     xdg-open https://extensions.gnome.org/extension/1514/rounded-corners/
     # 可能会引起窗口内向
     # xdg-open https://extensions.gnome.org/extension/5237/rounded-window-corners/
+
+    # 自动最大化新窗口，在其周围留下“无用的间隙”
+    xdg-open https://extensions.gnome.org/extension/5696/one-window-wonderland/
+    # 记住应用程序窗口的大小和位置并在该应用下次启动时恢复 会无法切换工作区
+    # xdg-open https://extensions.gnome.org/extension/4736/smart-auto-move/
+
+    # 窗口最大化时无标题栏
+    xdg-open https://extensions.gnome.org/extension/4630/no-titlebar-when-maximized/
+
+    # 在 GNOME 的应用程序菜单中隐藏应用程序
+    xdg-open https://extensions.gnome.org/extension/5895/app-hider/
+
+    # 工作区切换环绕
+    xdg-open https://extensions.gnome.org/extension/1116/workspace-switch-wraparound/
+
+    # 自定义主题色
+    xdg-open https://extensions.gnome.org/extension/5547/custom-accent-colors/
+
+    # 透明状态栏
+    xdg-open https://extensions.gnome.org/extension/1765/transparent-topbar/
+
+    # 天气
+    xdg-open https://extensions.gnome.org/extension/750/openweather/
+
+    # 为你的无线网络生成分享二维码
+    xdg-open https://extensions.gnome.org/extension/5416/wifi-qrcode/
 
     # gnome-extensions enable "$(gnome-extensions list | grep -m 1 user-theme)"
     # gnome-extensions enable "$(gnome-extensions list | grep -m 1 appindicatorsupport)"
