@@ -61,13 +61,9 @@ plugin() {
 
     # 屏幕圆角
     xdg-open https://extensions.gnome.org/extension/1514/rounded-corners/
-    # 可能会引起窗口内向
-    # xdg-open https://extensions.gnome.org/extension/5237/rounded-window-corners/
 
     # 自动最大化新窗口，在其周围留下“无用的间隙”
     xdg-open https://extensions.gnome.org/extension/5696/one-window-wonderland/
-    # 记住应用程序窗口的大小和位置并在该应用下次启动时恢复 会无法切换工作区
-    # xdg-open https://extensions.gnome.org/extension/4736/smart-auto-move/
 
     # 窗口最大化时无标题栏
     xdg-open https://extensions.gnome.org/extension/4630/no-titlebar-when-maximized/

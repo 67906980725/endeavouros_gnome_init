@@ -9,6 +9,9 @@ source ./install.sh
 source ./cp_conf.sh
 source ./default_path.sh
 
+# 不再显示欢迎程序
+# eos-welcome --disable
+
 # mirror 国内镜像
 sh ./mirror.sh
 
