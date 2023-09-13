@@ -80,11 +80,11 @@ plugin() {
     # 透明状态栏
     xdg-open https://extensions.gnome.org/extension/1765/transparent-topbar/
 
-    # 天气
-    xdg-open https://extensions.gnome.org/extension/750/openweather/
-
     # 为你的无线网络生成分享二维码
     xdg-open https://extensions.gnome.org/extension/5416/wifi-qrcode/
+
+    # 天气
+    # xdg-open https://extensions.gnome.org/extension/750/openweather/
 
     # gnome-extensions enable "$(gnome-extensions list | grep -m 1 user-theme)"
     # gnome-extensions enable "$(gnome-extensions list | grep -m 1 appindicatorsupport)"

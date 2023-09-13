@@ -100,6 +100,9 @@ install_ur wemeet-bin
 ## gui-develop-rust
 # sh ./rust.sh
 
+## gui-develop-nodejs
+# sh ./nodejs.sh
+
 ## gui-runtime 虚拟机/容器
 # 从 appimage 包安装应用
 #install_ur appimagelauncher
