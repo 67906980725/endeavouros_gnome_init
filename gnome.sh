@@ -59,6 +59,12 @@ plugin() {
     # 使用 Ctrl+Super+Up/Down 对工作区重新排序
     xdg-open https://extensions.gnome.org/extension/3685/reorder-workspaces/
 
+    # 模糊外观
+    xdg-open https://extensions.gnome.org/extension/3193/blur-my-shell/
+
+    # 使窗口在移动或调整大小时半透明
+    xdg-open https://extensions.gnome.org/extension/1446/transparent-window-moving/
+
     # 屏幕圆角
     xdg-open https://extensions.gnome.org/extension/1514/rounded-corners/
 

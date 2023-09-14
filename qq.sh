@@ -9,5 +9,6 @@ install_ur linuxqq
 # 也可以用 ctrl+= 来放大, ctrl+- 来缩小 (一些其它的软件可以用 ctrl+shift+= 放大)
 
 # 修复闪退
+# rm -r "$HOME/.config/QQ/crash_files"
 # rm -r "$HOME/.config/QQ"
 # reboot
