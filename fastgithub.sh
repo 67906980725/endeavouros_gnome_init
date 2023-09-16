@@ -4,11 +4,10 @@ source ./install.sh
 source ./cp_conf.sh
 source ./default_path.sh
 
-GITHUB_PROXY="${GITHUB_PROXY:-https://ghproxy.com/}"
-
 # 版本
 ver="2.1.4"
 # 安装目录
+mkdir -p "$HOME/.local/app"
 install_path="$HOME/.local/app/fastgithub"
 # 解压生成的文件夹
 unzip_name="fastgithub_linux-x64"

@@ -24,6 +24,7 @@ firefox https://addons.mozilla.org/zh-CN/firefox/addon/%E8%85%BE%E8%AE%AF%E7%BF%
 firefox https://addons.mozilla.org/zh-CN/firefox/addon/immersive-translate
 firefox https://addons.mozilla.org/zh-CN/firefox/addon/vimium-c/
 firefox https://addons.mozilla.org/zh-CN/firefox/addon/darkreader
+firefox https://addons.mozilla.org/zh-CN/firefox/addon/video-downloadhelper
 
 # other plugin
 xdg-open https://github.com/gorhill/uBlock/releases

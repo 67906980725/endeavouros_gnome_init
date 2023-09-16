@@ -57,6 +57,8 @@ sh ./firefox.sh
 install_ur microsoft-edge-stable-bin
 # code
 sh ./vscode.sh
+# 文件同步
+# sh ./syncthing.sh
 # 视频播放器
 sh ./mpv.sh
 # 截屏录屏

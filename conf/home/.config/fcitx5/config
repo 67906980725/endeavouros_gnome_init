@@ -8,6 +8,7 @@ EnumerateSkipFirst=True
 0=Control+space
 1=Shift+Shift_L
 2=Hangul
+3=Shift+Shift_R
 
 [Hotkey/AltTriggerKeys]
 0=Shift_L

@@ -50,8 +50,9 @@
 
 
 # oh-my-zsh
-# ZSH=/usr/share/oh-my-zsh/
-source /usr/share/oh-my-zsh/oh-my-zsh.sh
+# ZSH="$HOME/.oh-my-zsh/oh-my-zsh/"
+ZSH=/usr/share/oh-my-zsh/
+source "$ZSH/oh-my-zsh.sh"
 ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
   mkdir $ZSH_CACHE_DIR
@@ -77,6 +78,8 @@ source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+
+# source "$ZSH/oh-my-zsh.sh"
 
 # User configuration
 

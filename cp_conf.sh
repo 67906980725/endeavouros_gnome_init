@@ -3,6 +3,7 @@
 check_parent()
 {
     local file="$1"
+    # local file_full_path=$(readlink -f "$file")
     local dir=$(dirname "$file")
     [ ! -e "$dir" ] && mkdir -p "$dir"
 }
