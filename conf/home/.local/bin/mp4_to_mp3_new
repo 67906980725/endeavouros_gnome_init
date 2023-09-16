@@ -58,8 +58,8 @@ for file in $(echo "$files"); do
 done
 
 # 用结果文件将处理结果树分离到新文件夹
-# $HOME/.local/bin/tree_mv "$result_file" "$t" "${t}_mp3"
-/home/v/.local/project/sys/endeavour_gnome_init/conf/home/.local/bin/tree_mv "$result_file" "$t" "${t}_mp3"
+$HOME/.local/bin/tree_mv "$result_file" "$t" "${t}_mp3"
+# /home/v/.local/project/sys/endeavour_gnome_init/conf/home/.local/bin/tree_mv "$result_file" "$t" "${t}_mp3"
 
 # 删除结果文件
 # rm "$result_file"
